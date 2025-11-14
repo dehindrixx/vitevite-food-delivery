@@ -9,7 +9,16 @@ const client = new Client({
   authStrategy: new LocalAuth(),
   puppeteer: {
     headless: true,
-    args: ['--no-sandbox', '--disable-setuid-sandbox']
+    args: [
+      '--no-sandbox',
+      '--disable-setuid-sandbox',
+      '--disable-dev-shm-usage',
+      '--disable-accelerated-2d-canvas',
+      '--no-first-run',
+      '--no-zygote',
+      '--single-process',
+      '--disable-gpu'
+    ]
   }
 });
 
@@ -26,10 +35,14 @@ client.on('message', async (message) => {
   if (message.body === 'ping') {
     message.reply('pong');
   }
+  
+  if (message.body === 'menu') {
+    message.reply('🍕 Welcome to ViteVite Food Delivery! This is working!');
+  }
 });
 
 app.get('/', (req, res) => {
-  res.send('ViteVite Bot is running!');
+  res.send('ViteVite Bot is running! Check Railway logs for QR code.');
 });
 
 app.listen(PORT, () => {
